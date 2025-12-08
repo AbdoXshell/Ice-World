@@ -11,6 +11,7 @@
     <title>Web Design Mastery | IceWorld</title>
   </head>
   <body>
+    <a class="skip-link" href="#home">Skip to content</a>
     <nav>
       <div class="nav__header">
         <div class="nav__logo">
@@ -191,10 +192,11 @@
           discounts and updates on our latest ice cream flavors and special
           offers.
         </p>
-        <form action="/">
-          <input type="text" placeholder="Type Your Email" />
-          <button class="btn">Subscribe</button>
+        <form id="subscribe-form" action="/" method="post" novalidate>
+          <input type="email" name="email" placeholder="Type Your Email" required />
+          <button class="btn" type="submit">Subscribe</button>
         </form>
+        <p id="subscribe-message" class="form__message" aria-live="polite" role="status"></p>
       </div>
     </section>
 

@@ -17,6 +17,26 @@ navLinks.addEventListener("click", (e) => {
   menuBtnIcon.setAttribute("class", "ri-menu-3-line");
 });
 
+const subscribeForm = document.getElementById("subscribe-form");
+const subscribeMessage = document.getElementById("subscribe-message");
+
+if (subscribeForm && subscribeMessage) {
+  subscribeForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = subscribeForm.email.value.trim();
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (isValid) {
+      subscribeMessage.textContent = "Thanks for subscribing!";
+      subscribeMessage.className = "form__message success";
+      subscribeForm.reset();
+    } else {
+      subscribeMessage.textContent = "Please enter a valid email.";
+      subscribeMessage.className = "form__message error";
+      subscribeForm.email.focus();
+    }
+  });
+}
+
 const scrollRevealOption = {
   distance: "50px",
   origin: "bottom",
