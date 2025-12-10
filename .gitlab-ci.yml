@@ -1,0 +1,44 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker info
+    - docker build -t ice-world .
+  artifacts:
+    expire_in: 1 week
+
+test:
+  stage: test
+  image: alpine:latest
+  script:
+    - test -f index.html
+    - echo "basic check ok"
+
+pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - apk add --no-cache rsync
+    - mkdir -p public
+    - rsync -av --delete \
+        --exclude ".git" \
+        --exclude ".gitlab-ci.yml" \
+        --exclude "Dockerfile" \
+        --exclude ".dockerignore" \
+        . public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
