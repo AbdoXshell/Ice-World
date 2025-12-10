@@ -30,12 +30,14 @@ pages:
   script:
     - apk add --no-cache rsync
     - mkdir -p public
-    - rsync -av --delete \
+    - |
+      rsync -av --delete \
         --exclude ".git" \
         --exclude ".gitlab-ci.yml" \
-        --exclude "Dockerfile" \
+        --exclude ".gitignore" \
         --exclude ".dockerignore" \
-        . public/
+        --exclude "Dockerfile" \
+        ./ public/
   artifacts:
     paths:
       - public
